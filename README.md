@@ -1,4 +1,6 @@
-# <p align="center"><a href='https://github.com/Dugnist/html5-boilerplate'><img width="200" src="http://css-live.ru/wp-content/uploads/2017/06/web1.png" alt="html5-boilerplate" /></a><br/> html5-boilerplate </p>
+# <p align="center">D3.js Full Tutorial Course Follow Up</p>
+
+see [video - youtube](https://www.youtube.com/watch?v=_8V5o2UHG0E)
 
 ### Get started
 
@@ -15,8 +17,8 @@ Don't forget add to index.html this line:
 ```
   <script type="text/javascript" src="../build/app.js"></script>
 ```
-
 ### For build
+
 
 ```
   npm run build
