@@ -255,3 +255,10 @@ footer {
   h2, h3 {
     page-break-after: avoid; }
 }
+
+rect {
+  fill: steelblue;
+}
+text { 
+  font-size: 1.4em;
+}
