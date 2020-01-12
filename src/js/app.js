@@ -5,12 +5,21 @@ import {makeRender} from './fruitBowl'
 const svg = select('svg')
 svg.style('border', '1px dotted lightgray')
 
-const makeFruit = type => ({
-    type
-})
+const makeFruit = function() {
+    let nextId = 0
+    return function (type) {
+        nextId += 1
+        return {
+            type,
+            id: nextId
+        }
+    }
+}()
+
 const props = {
     fruits: range(5).map(() => makeFruit('apple'))
 };
+
 const render = makeRender(svg, props)
 
 render()

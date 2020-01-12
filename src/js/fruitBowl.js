@@ -18,7 +18,7 @@ export function makeRender(svg, props) {
         //console.log(`props.fruits = ${props.fruits.length} ea`)
         fruits = fruits || props.fruits
         
-        const circles = selection.selectAll('circle').data(fruits);
+        const circles = selection.selectAll('circle').data(fruits, fruit => fruit.id);
         // circles.enter()
         //     .append('circle') 
         //     .attr('cx', (d, i) => {
@@ -35,16 +35,16 @@ export function makeRender(svg, props) {
         //     .remove()
         circles.enter()
             .append('circle')
-            .attr('cx', (d, i) => {
-                //console.log(d)
-                return i * 120 + 60;
-            })
-            .attr('cy', height / 2)
-            .attr('r', 0)
+                .attr('cy', height / 2)
+                .attr('r', 0)
             .merge(circles)
-            .attr('fill', d => colorScale(d.type))            
-            .transition().duration(1000)
-            .attr('r', d => radiusScale(d.type))
+                .attr('fill', d => colorScale(d.type))            
+                .transition().duration(1000)
+                .attr('cx', (d, i) => {
+                    //console.log(d)
+                    return i * 120 + 60;
+                })
+                .attr('r', d => radiusScale(d.type))
             
         circles.exit()
             .transition().duration(1000)
