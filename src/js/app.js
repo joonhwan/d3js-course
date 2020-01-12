@@ -10,17 +10,18 @@ import {
     scaleBand, 
     max,
     axisLeft,
-    axisBottom
+    axisBottom,
+    format
 } from 'd3';
 
 /********** Paste your code here! ************/
-// import * as d3 from 'd3'
 // console.log('Paste your code here!');
+// import * as d3 from 'd3'
 // console.log(testModule.hello);
 // console.log(d3)
 
 const svg = select('svg')
-svg.style('border', '1px solid red')
+svg.style('border', '1px dotted lightgray')
 
 // const width = parseFloat(svg.attr('width'))
 // const height= parseFloat(svg.attr('height'))
@@ -38,10 +39,10 @@ function render(data) {
         y: d => d.country
     }
     const margin = {
-        top: 20, 
-        left: 80,
-        right: 20,
-        bottom: 20
+        top: 70, 
+        left: 150,
+        right: 80,
+        bottom: 70
     }
     const innerWidth = width - margin.left - margin.right
     const innerHeight = height - margin.top - margin.bottom
@@ -54,28 +55,64 @@ function render(data) {
         .domain(data.map(valueOf.y))
         .range([0, innerHeight])
         .padding(0.2)
-    const yAxis = axisLeft(scaleY);
-    const xAxis = axisBottom(scaleX)
+    const axis = {
+        x: axisBottom(scaleX)
+            //.tickFormat(format('.3s'))
+            .tickFormat(d => {
+                return format('.3s')(d).replace('G', 'B')
+            }),
+        y: axisLeft(scaleY)
+    }
         
     console.log(scaleX)
     const g = svg
         .append('g')
         .attr('transform', `translate(${margin.left}, ${margin.top})`)
         ;
-    //yAxis(g.append('g'))
-    //xAxis(g.append('g'))
-    g.append('g').call(yAxis)
-    g.append('g').call(xAxis).attr('transform', `translate(0, ${innerHeight})`)
+    {
+        //yAxis(g.append('g'))
+        //xAxis(g.append('g'))
+        const x = g.append('g')
+            .call(axis.x)
+            .attr('transform', `translate(0, ${innerHeight})`)
+            ;
+        const axisProp = {
+            x: {
+                width: x.attr('width'),
+                height: x.attr('height')
+            }            
+        }
+        console.log(axisProp)
+        x.selectAll('.domain, .tick line')
+            .remove()
+            
+        x.append('text')
+            .attr('class', 'axis-label')
+            .attr('fill', 'black')
+            .attr('x', innerWidth/2)
+            .attr('y', 50)
+            .text('Population')
         
-    
-    let selection = g
-        .selectAll('rect')
-        .data(data)
-        .enter()
-            .append('rect')
-                .attr('y', d => scaleY(valueOf.y(d)))
-                .attr('width', d => scaleX(valueOf.x(d)))
-                .attr('height', d => scaleY.bandwidth())
+        const y = g.append('g')
+            .call(axis.y)
+            .selectAll('.domain, .tick line')
+                .remove()
+            ;
+
+        g.append('text')
+            .attr('class','title')
+            .attr('y', 0)
+            .text('Top 10 Population')
+        
+        let selection = g
+            .selectAll('rect')
+            .data(data)
+            .enter()
+                .append('rect')
+                    .attr('y', d => scaleY(valueOf.y(d)))
+                    .attr('width', d => scaleX(valueOf.x(d)))
+                    .attr('height', d => scaleY.bandwidth())
+    }
     
 }
 
