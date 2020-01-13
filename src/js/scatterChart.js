@@ -73,6 +73,7 @@ function render(svg, data) {
 
 
 export function run(svg) {
+    const url = 'https://vizhub.com/curran/datasets/auto-mpg.csv'
     csv('data.csv').then(data => {
         data.forEach(d => {
             d.population = +d.population * 1000
