@@ -264,6 +264,10 @@ text {
   font-family: sans-serif;
 }
 
+.tick {
+  color: lightgray;
+}
+
 .tick text {
   font-size: 1.8em;
   fill: #635f5d;
@@ -276,4 +280,8 @@ text {
 
 .title { 
   font-size: 2.8em;
+}
+
+circle {
+  fill: steelblue;
 }
